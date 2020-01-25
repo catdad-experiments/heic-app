@@ -1,0 +1,66 @@
+:root {
+  --controls-height: 3em;
+  --background: #202124;
+  --middleground: #777777;
+  --foreground: #e5e5e5;
+  --full: calc(var(--vh, 1vh) * 100);
+  --limit: 600px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+
+  font-family: sans-serif;
+  color: var(--foreground);
+  line-height: 1.2;
+  overflow-y: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.unsupported {
+  text-align: center;
+}
+.unsupported a {
+  color: white;
+  font-weight: bold;
+}
+
+.header-container.error {
+  font-weight: bold;
+  background: #d64c4f;
+}
+
+.container {
+  position: relative;
+  height: var(--full);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.contents {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.limit {
+  width: 100%;
+  max-width: var(--limit);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hide {
+  display: none !important;
+}
+
+.invisible {
+  opacity: 0;
+}
