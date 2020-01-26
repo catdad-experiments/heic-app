@@ -66,7 +66,7 @@ export default () => {
   const missingFeatures = [
     'Promise',
     'Map',
-    'localStorage',
+    'FileReader',
     ['dynamic import', () => {
       try {
         new Function('import("").catch(() => {})')();
@@ -123,6 +123,7 @@ export default () => {
   // load all the modules from the server directly
   Promise.all([
     load('./event-emitter.js'),
+    load('./open.js'),
   ]).then(async ([
     eventEmitter,
     ...modules
