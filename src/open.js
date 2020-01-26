@@ -1,4 +1,5 @@
 /* global libheif */
+/* eslint-disable no-console */
 
 const readFile = file => {
   return new Promise((resolve, reject) => {
