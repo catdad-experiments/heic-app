@@ -64,3 +64,9 @@ html, body {
 .invisible {
   opacity: 0;
 }
+
+/** STUFF ABOVE IS STANDARD FRAMEWORK **/
+
+canvas {
+  max-height: 50%;
+}
