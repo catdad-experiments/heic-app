@@ -62,6 +62,14 @@ const render = async (arrayBuffer) => {
   return canvas;
 };
 
+const loadUrl = (img, url) => {
+  return new Promise((resolve, reject) => {
+    img.onload = () => resolve();
+    img.onerror = e => reject(e);
+    img.src = url;
+  });
+};
+
 export default ({ events }) => {
   const container = document.querySelector('#main');
 
@@ -80,8 +88,13 @@ export default ({ events }) => {
       console.log('converting', file.name);
       const canvas = await render(arrayBuffer);
 
+      console.log('displaying', file.name);
+      const img = document.createElement('img');
+      await loadUrl(img, canvas.toDataURL('image/jpeg'));
+      img.setAttribute('data-name', file.name.split('.').slice(0, -1).join('.').concat('.jpg'));
+
       console.log('downloading', file.name);
-      container.appendChild(canvas);
+      container.appendChild(img);
     }).catch(err => {
       events.emit('error', err);
     });
