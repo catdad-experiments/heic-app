@@ -63,6 +63,8 @@ const render = async (arrayBuffer) => {
 };
 
 export default ({ events }) => {
+  const container = document.querySelector('#main');
+
   const onDrop = ev => {
     ev.stopPropagation();
     ev.preventDefault();
@@ -70,13 +72,16 @@ export default ({ events }) => {
     const { files } = ev.dataTransfer;
 
     series(files, async file => {
+      console.log('reading', file.name);
       const arrayBuffer = await readFile(file);
 
       // TODO check if is heic
 
+      console.log('converting', file.name);
       const canvas = await render(arrayBuffer);
 
-      console.log(file.name, arrayBuffer, canvas);
+      console.log('downloading', file.name);
+      container.appendChild(canvas);
     }).catch(err => {
       events.emit('error', err);
     });
