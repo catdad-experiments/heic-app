@@ -75,6 +75,10 @@ export default ({ events }) => {
   const container = document.querySelector('#main');
 
   const onConvert = ({ files }) => {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+
     series(files, async file => {
       console.log('reading', file.name);
       const arrayBuffer = await readFile(file);
