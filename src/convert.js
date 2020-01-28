@@ -71,6 +71,15 @@ const loadUrl = (img, url) => {
   });
 };
 
+// based on https://github.com/oaleynik/is-heic
+const isHeic = function (buffer) {
+  if (!buffer || buffer.length < 24) {
+    return false;
+  }
+
+  return buffer[20] === 0x68 && buffer[21] === 0x65 && buffer[22] === 0x69 && buffer[23] === 0x63;
+};
+
 export default ({ events }) => {
   const container = document.querySelector('#main');
 
@@ -83,7 +92,9 @@ export default ({ events }) => {
       console.log('reading', file.name);
       const arrayBuffer = await readFile(file);
 
-      // TODO check if is heic
+      const valid = isHeic(new Uint8Array(arrayBuffer.slice(0, 24)));
+      console.log('is heic?', file.name, valid);
+      // TODO if not heic, do something
 
       console.log('converting', file.name);
       const canvas = await render(arrayBuffer);
