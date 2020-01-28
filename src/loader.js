@@ -124,6 +124,7 @@ export default () => {
   Promise.all([
     load('./event-emitter.js'),
     load('./open.js'),
+    load('./convert.js')
   ]).then(async ([
     eventEmitter,
     ...modules
