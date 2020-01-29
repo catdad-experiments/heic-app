@@ -25,8 +25,8 @@ export default ({ events, menu, storage }) => {
       return;
     }
 
-    events.emit('file-load', {
-      file: ev.target.files[0],
+    events.emit('convert', {
+      files: [...ev.target.files],
       quality: DEFAULT_EXPORT_QUALITY
     });
   };
