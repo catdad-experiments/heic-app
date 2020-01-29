@@ -123,14 +123,18 @@ export default () => {
   // load all the modules from the server directly
   Promise.all([
     load('./event-emitter.js'),
+    load('./storage.js'),
+    load('./menu.js'),
     load('./open.js'),
     load('./convert.js')
   ]).then(async ([
     eventEmitter,
+    storage,
+    menu,
     ...modules
   ]) => {
     // set up a global event emitter
-    const context = { events: eventEmitter(), load };
+    const context = { events: eventEmitter(), storage, menu, load };
     const destroys = await map(modules, mod => mod(context));
 
     context.events.on('error', function (err) {
