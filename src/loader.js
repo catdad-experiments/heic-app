@@ -125,6 +125,7 @@ export default () => {
     load('./event-emitter.js'),
     load('./storage.js'),
     load('./menu.js'),
+    load('./controls.js'),
     load('./open.js'),
     load('./convert.js')
   ]).then(async ([
