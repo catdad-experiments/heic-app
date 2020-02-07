@@ -27,11 +27,7 @@ export default ({ events, menu, storage }) => {
       return;
     }
 
-    events.emit('convert', {
-      files: [...ev.target.files],
-      quality: DEFAULT_EXPORT_QUALITY,
-      result: DEFAULT_RESULT
-    });
+    events.emit('open', { files: [...ev.target.files] });
   };
 
   const onClick = () => void openInput.click();
@@ -101,11 +97,7 @@ export default ({ events, menu, storage }) => {
     });
   };
 
-  const onFileShare = ({ file }) => void events.emit('convert', {
-    files: [file],
-    quality: DEFAULT_EXPORT_QUALITY,
-    result: DEFAULT_RESULT
-  });
+  const onFileShare = ({ file }) => void events.emit('open', { files: [file] });
   const onOpen = ({ files }) => void events.emit('convert', {
     files,
     quality: DEFAULT_EXPORT_QUALITY,
