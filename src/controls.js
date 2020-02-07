@@ -2,6 +2,7 @@ const find = selector => document.querySelector(selector);
 
 export default ({ events, menu, storage }) => {
   let DEFAULT_EXPORT_QUALITY = storage.get('export-quality') || { mime: 'image/png', quality: 1 };
+  let DEFAULT_RESULT = storage.get('result-action') || 'display';
   let deferredPrompt;
 
   const controls = find('.controls');
@@ -9,6 +10,7 @@ export default ({ events, menu, storage }) => {
   const open = find('#open');
   const openInput = find('#open-input');
   const quality = find('#quality');
+  const results = find('#results');
 
   const help = find('#help');
 
@@ -27,7 +29,8 @@ export default ({ events, menu, storage }) => {
 
     events.emit('convert', {
       files: [...ev.target.files],
-      quality: DEFAULT_EXPORT_QUALITY
+      quality: DEFAULT_EXPORT_QUALITY,
+      result: DEFAULT_RESULT
     });
   };
 
@@ -50,6 +53,26 @@ export default ({ events, menu, storage }) => {
       DEFAULT_EXPORT_QUALITY = { mime, quality };
       storage.set('export-quality', DEFAULT_EXPORT_QUALITY);
       events.emit('controls-quality', DEFAULT_EXPORT_QUALITY);
+    }).catch(err => {
+      events.emit('warn', err);
+    });
+  };
+  const onResults = () => {
+    const choices = [
+      { text: 'display' },
+      { text: 'download' },
+    ].map(choice => {
+      if (choice.text === DEFAULT_RESULT) {
+        return Object.assign({ icon: 'check' }, choice);
+      }
+
+      return choice;
+    });
+
+    menu(...choices).then(({ text }) => {
+      DEFAULT_RESULT = text;
+      storage.set('result-action', DEFAULT_RESULT);
+      events.emit('controls-result', DEFAULT_RESULT);
     }).catch(err => {
       events.emit('warn', err);
     });
@@ -80,7 +103,8 @@ export default ({ events, menu, storage }) => {
 
   const onFileShare = ({ file }) => void events.emit('file-load', {
     file,
-    quality: DEFAULT_EXPORT_QUALITY
+    quality: DEFAULT_EXPORT_QUALITY,
+    result: DEFAULT_RESULT
   });
 
   help.addEventListener('click', onHelp);
@@ -88,6 +112,7 @@ export default ({ events, menu, storage }) => {
   open.addEventListener('click', onClick);
   openInput.addEventListener('change', onOpen);
   quality.addEventListener('click', onQuality);
+  results.addEventListener('click', onResults);
 
   events.on('can-install', onCanInstall);
   events.on('file-share', onFileShare);
@@ -98,6 +123,7 @@ export default ({ events, menu, storage }) => {
     open.removeEventListener('click', onClick);
     openInput.removeEventListener('change', onOpen);
     quality.removeEventListener('click', onQuality);
+    results.removeEventListener('click', onResults);
 
     events.off('can-install', onCanInstall);
     events.off('file-share', onFileShare);

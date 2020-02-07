@@ -1,6 +1,11 @@
 /* global libheif */
 /* eslint-disable no-console */
 
+const EXTENSIONS = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg'
+};
+
 const readFile = file => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -87,29 +92,46 @@ const isHeic = function (buffer) {
 export default ({ events }) => {
   const container = document.querySelector('#main');
 
-  const onConvert = ({ files }) => {
+  const onConvert = ({ files, quality, result }) => {
+    const extension = EXTENSIONS[quality.mime];
+
     while (container.firstChild) {
       container.removeChild(container.firstChild);
     }
 
     series(files, async file => {
-      console.log('reading', file.name);
+      const output = file.name.split('.').slice(0, -1).join('.').concat(`.${extension}`);
+
+      console.log(`reading ${file.name} to ${output}`);
       const arrayBuffer = await readFile(file);
 
       const valid = isHeic(new Uint8Array(arrayBuffer.slice(0, 24)));
-      console.log('is heic?', file.name, valid);
 
       if (!valid) {
         return void events.emit('warn', new Error(`"${file.name}" is not a HEIC image`));
       }
 
-      console.log('converting', file.name);
+      console.log(`converting ${file.name} to ${output}`);
       const canvas = await render(arrayBuffer);
 
-      const blob = await toBlob(canvas);
+      if (result === 'display') {
+        console.log(`displaying ${file.name} to ${output}`);
+        const img = document.createElement('img');
+        await loadUrl(img, canvas.toDataURL(quality.mime, quality.quality));
 
-      console.log('emitting download', file.name);
-      events.emit('download', { blob, filename: `${file.name}.jpg` });
+        // TODO figure out if I can set the name of an image
+        img.setAttribute('data-name', output);
+        //  img.setAttribute('download', output);
+        //  img.setAttribute('filename', output);
+        //  img.setAttribute('alt', output);
+        //  img.setAttribute('name', output);
+
+        container.appendChild(img);
+      } else {
+        console.log(`downloading ${file.name} to ${output}`);
+        const blob = await toBlob(canvas, quality.mime, quality.quality);
+        events.emit('download', { blob, filename: output });
+      }
     }).catch(err => {
       events.emit('error', err);
     });
