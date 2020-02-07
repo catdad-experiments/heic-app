@@ -6,27 +6,25 @@ const EXTENSIONS = {
   'image/jpeg': 'jpg'
 };
 
-const readFile = file => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onerror = e => {
-      reject(e);
-    };
-
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-
-    reader.readAsArrayBuffer(file);
-  });
-};
-
 const series = async (items, iterator) => {
   for (let i = 0, l = items.length; i < l; i++) {
     await iterator(items[i], i);
   }
 };
+
+const readFile = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+
+  reader.onerror = e => {
+    reject(e);
+  };
+
+  reader.onload = () => {
+    resolve(reader.result);
+  };
+
+  reader.readAsArrayBuffer(file);
+});
 
 const render = async (arrayBuffer) => {
   const canvas = document.createElement('canvas');
@@ -68,13 +66,11 @@ const render = async (arrayBuffer) => {
   return canvas;
 };
 
-const loadUrl = (img, url) => {
-  return new Promise((resolve, reject) => {
-    img.onload = () => resolve();
-    img.onerror = e => reject(e);
-    img.src = url;
-  });
-};
+const loadUrl = (img, url) => new Promise((resolve, reject) => {
+  img.onload = () => resolve();
+  img.onerror = e => reject(e);
+  img.src = url;
+});
 
 const toBlob = (canvas, mime = 'image/jpeg', quality = 0.92) => new Promise(resolve => {
   canvas.toBlob(blob => resolve(blob), mime, quality);
