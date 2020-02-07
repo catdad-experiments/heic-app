@@ -100,7 +100,7 @@ export default ({ events }) => {
       console.log('is heic?', file.name, valid);
 
       if (!valid) {
-        return void events.emit('error', new Error(`"${file.name}" is not a HEIC image`));
+        return void events.emit('warn', new Error(`"${file.name}" is not a HEIC image`));
       }
 
       console.log('converting', file.name);
