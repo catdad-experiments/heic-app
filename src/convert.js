@@ -71,6 +71,10 @@ const loadUrl = (img, url) => {
   });
 };
 
+const toBlob = (canvas, mime = 'image/jpeg', quality = 0.92) => new Promise(resolve => {
+  canvas.toBlob(blob => resolve(blob), mime, quality);
+});
+
 // based on https://github.com/oaleynik/is-heic
 const isHeic = function (buffer) {
   if (!buffer || buffer.length < 24) {
@@ -99,13 +103,10 @@ export default ({ events }) => {
       console.log('converting', file.name);
       const canvas = await render(arrayBuffer);
 
-      console.log('displaying', file.name);
-      const img = document.createElement('img');
-      await loadUrl(img, canvas.toDataURL('image/jpeg'));
-      img.setAttribute('data-name', file.name.split('.').slice(0, -1).join('.').concat('.jpg'));
+      const blob = await toBlob(canvas);
 
-      console.log('downloading', file.name);
-      container.appendChild(img);
+      console.log('emitting download', file.name);
+      events.emit('download', { blob, filename: `${file.name}.jpg` });
     }).catch(err => {
       events.emit('error', err);
     });
