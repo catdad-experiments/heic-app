@@ -1,7 +1,7 @@
 /* global saveAs */
+
 export default ({ events }) => {
   const onDownload = ({ blob, filename }) => {
-    console.log('downloading', filename);
     saveAs(blob, filename);
   };
 
