@@ -98,7 +98,10 @@ export default ({ events }) => {
 
       const valid = isHeic(new Uint8Array(arrayBuffer.slice(0, 24)));
       console.log('is heic?', file.name, valid);
-      // TODO if not heic, do something
+
+      if (!valid) {
+        return void events.emit('error', new Error(`"${file.name}" is not a HEIC image`));
+      }
 
       console.log('converting', file.name);
       const canvas = await render(arrayBuffer);
