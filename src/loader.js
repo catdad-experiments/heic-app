@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 
+import toast from './toast.js';
+
 let events = (function () {
   let collection = [];
 
@@ -53,13 +55,17 @@ export default () => {
     const text = `<p>It seems your browser is not supported. The following features are missing:</p>
                   <p>${missing.join(', ')}</p>`;
 
-    // eslint-disable-next-line no-console
-    console.log(text);
+    toast.error(text, {
+      duration: -1 // forever
+    });
   }
 
-  function onError(err) {
+  function onError(err, duration = 8 * 1000) {
     // eslint-disable-next-line no-console
     console.error(err);
+    toast.error(`<p>An error occured:</p><p>${err.toString().split('\n').join('<br/>')}</p>`, {
+      duration
+    });
   }
 
   // detect missing features in the browser
@@ -145,7 +151,11 @@ export default () => {
     });
 
     context.events.on('warn', function (err) {
-      onError(err);
+      toast.error(err.message || err.toString());
+    });
+
+    context.events.on('info', (msg) => {
+      toast.info(msg.toString());
     });
 
     events.flush(context.events);

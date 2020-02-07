@@ -162,6 +162,13 @@ html, body {
   padding-right: 0.5em;
 }
 
+/* TOAST STYLE */
+
+.toastify.toastify.toastify {
+  max-width: calc(100% - 20px);
+  text-align: center;
+}
+
 /* MISC */
 
 img {
