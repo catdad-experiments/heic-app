@@ -5,7 +5,7 @@ export default ({ events }) => {
 
     const { files } = ev.dataTransfer;
 
-    events.emit('convert', { files });
+    events.emit('open', { files });
   };
 
   const onDrag = (ev) => {

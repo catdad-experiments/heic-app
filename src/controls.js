@@ -22,7 +22,7 @@ export default ({ events, menu, storage }) => {
     }
   };
 
-  const onOpen = (ev) => {
+  const onOpenInput = (ev) => {
     if (!ev.target.files[0]) {
       return;
     }
@@ -101,8 +101,13 @@ export default ({ events, menu, storage }) => {
     });
   };
 
-  const onFileShare = ({ file }) => void events.emit('file-load', {
-    file,
+  const onFileShare = ({ file }) => void events.emit('convert', {
+    files: [file],
+    quality: DEFAULT_EXPORT_QUALITY,
+    result: DEFAULT_RESULT
+  });
+  const onOpen = ({ files }) => void events.emit('convert', {
+    files,
     quality: DEFAULT_EXPORT_QUALITY,
     result: DEFAULT_RESULT
   });
@@ -110,22 +115,24 @@ export default ({ events, menu, storage }) => {
   help.addEventListener('click', onHelp);
   install.addEventListener('click', onInstall);
   open.addEventListener('click', onClick);
-  openInput.addEventListener('change', onOpen);
+  openInput.addEventListener('change', onOpenInput);
   quality.addEventListener('click', onQuality);
   results.addEventListener('click', onResults);
 
   events.on('can-install', onCanInstall);
   events.on('file-share', onFileShare);
+  events.on('open', onOpen);
 
   return () => {
     help.removeEventListener('click', onHelp);
     install.removeEventListener('click', onInstall);
     open.removeEventListener('click', onClick);
-    openInput.removeEventListener('change', onOpen);
+    openInput.removeEventListener('change', onOpenInput);
     quality.removeEventListener('click', onQuality);
     results.removeEventListener('click', onResults);
 
     events.off('can-install', onCanInstall);
     events.off('file-share', onFileShare);
+    events.off('open', onOpen);
   };
 };
