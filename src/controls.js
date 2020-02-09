@@ -9,6 +9,7 @@ export default ({ events, menu, storage }) => {
   const install = find('#install');
   const open = find('#open');
   const openInput = find('#open-input');
+  const intro = find('#intro');
   const quality = find('#quality');
   const results = find('#results');
 
@@ -30,7 +31,7 @@ export default ({ events, menu, storage }) => {
     events.emit('open', { files: [...ev.target.files] });
   };
 
-  const onClick = () => void openInput.click();
+  const onOpenClick = () => void openInput.click();
   const onQuality = () => {
     const choices = [
       { mime: 'image/png', quality: 1, text: 'PNG at 100%' },
@@ -106,7 +107,8 @@ export default ({ events, menu, storage }) => {
 
   help.addEventListener('click', onHelp);
   install.addEventListener('click', onInstall);
-  open.addEventListener('click', onClick);
+  intro.addEventListener('click', onOpenClick);
+  open.addEventListener('click', onOpenClick);
   openInput.addEventListener('change', onOpenInput);
   quality.addEventListener('click', onQuality);
   results.addEventListener('click', onResults);
@@ -118,7 +120,8 @@ export default ({ events, menu, storage }) => {
   return () => {
     help.removeEventListener('click', onHelp);
     install.removeEventListener('click', onInstall);
-    open.removeEventListener('click', onClick);
+    intro.removeEventListener('click', onOpenClick);
+    open.removeEventListener('click', onOpenClick);
     openInput.removeEventListener('change', onOpenInput);
     quality.removeEventListener('click', onQuality);
     results.removeEventListener('click', onResults);

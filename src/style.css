@@ -169,6 +169,16 @@ html, body {
   text-align: center;
 }
 
+/* INTRO */
+
+.intro {
+  text-align: center;
+}
+
+.intro i {
+  font-size: 6rem;
+}
+
 /* MISC */
 
 img {
