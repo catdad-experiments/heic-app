@@ -15,7 +15,6 @@ html, body {
   font-family: sans-serif;
   color: var(--foreground);
   line-height: 1.2;
-  overflow-y: hidden;
 }
 
 * {
@@ -72,15 +71,16 @@ html, body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--controls-height));
-  overflow: hidden;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
+  padding-bottom: var(--controls-height)
 }
 
 .controls {
-  position: relative;
-  flex-grow: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   height: var(--controls-height);
   overflow: hidden;
   width: 100%;
@@ -182,6 +182,20 @@ html, body {
 
 /* MISC */
 
-img {
-  max-height: 50%;
+.main img {
+  max-height: 600px;
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+
+.main img:first-of-type {
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .main img {
+    --max: calc(100vw - 20px);
+    max-width: var(--max);
+    max-height: var(--max);
+  }
 }
