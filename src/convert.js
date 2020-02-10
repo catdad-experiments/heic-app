@@ -76,13 +76,20 @@ const toBlob = (canvas, mime = 'image/jpeg', quality = 0.92) => new Promise(reso
   canvas.toBlob(blob => resolve(blob), mime, quality);
 });
 
-// based on https://github.com/oaleynik/is-heic
-const isHeic = function (buffer) {
-  if (!buffer || buffer.length < 24) {
-    return false;
-  }
+// code adapted from: https://github.com/sindresorhus/file-type/blob/6f901bd82b849a85ca4ddba9c9a4baacece63d31/core.js#L428-L438
+const isHeic = (buffer) => {
+  const brandMajor = String.fromCharCode(...buffer.slice(8, 12)).replace('\0', ' ').trim();
 
-  return buffer[20] === 0x68 && buffer[21] === 0x65 && buffer[22] === 0x69 && buffer[23] === 0x63;
+  const brands = {
+    'mif1': true,
+    'msf1': true,
+    'heic': true,
+    'heix': true,
+    'hevc': true,
+    'hevx': true,
+  };
+
+  return brands[brandMajor] || false;
 };
 
 export default ({ events }) => {
