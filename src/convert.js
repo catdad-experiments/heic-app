@@ -123,12 +123,14 @@ export default ({ events }) => {
         //  img.setAttribute('name', output);
 
         container.appendChild(img);
-
-        events.emit('info', `Right-click or long press to save ${files.length > 1 ? 'images' : 'image'}`);
       } else {
         console.log(`downloading ${file.name} to ${output}`);
         const blob = await toBlob(canvas, quality.mime, quality.quality);
         events.emit('download', { blob, filename: output });
+      }
+    }).then(() => {
+      if (result === 'display') {
+        events.emit('info', `Right-click or long press to save ${files.length > 1 ? 'images' : 'image'}`);
       }
     }).catch(err => {
       events.emit('error', err);
