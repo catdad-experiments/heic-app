@@ -34,6 +34,7 @@ export default ({ events, menu, storage }) => {
   const onOpenClick = () => void openInput.click();
   const onQuality = () => {
     const choices = [
+      { meta: true, text: 'Choose output format and quality' },
       { mime: 'image/png', quality: 1, text: 'PNG at 100%' },
       { mime: 'image/jpeg', quality: 1, text: 'JPG at 100%' },
       { mime: 'image/jpeg', quality: 0.92, text: 'JPG at 92%' },
@@ -56,18 +57,19 @@ export default ({ events, menu, storage }) => {
   };
   const onResults = () => {
     const choices = [
-      { text: 'display' },
-      { text: 'download' },
+      { text: 'After conversion', meta: true },
+      { text: 'display images', value: 'display' },
+      { text: 'download images', value: 'download' },
     ].map(choice => {
-      if (choice.text === DEFAULT_RESULT) {
+      if (choice.value === DEFAULT_RESULT) {
         return Object.assign({ icon: 'check' }, choice);
       }
 
       return choice;
     });
 
-    menu(...choices).then(({ text }) => {
-      DEFAULT_RESULT = text;
+    menu(...choices).then(({ value }) => {
+      DEFAULT_RESULT = value;
       storage.set('result-action', DEFAULT_RESULT);
       events.emit('controls-result', DEFAULT_RESULT);
     }).catch(err => {

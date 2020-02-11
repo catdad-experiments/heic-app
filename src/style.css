@@ -141,6 +141,7 @@ html, body {
   left: 0;
   right: 0;
   background: rgba(0,0,0,0.5);
+  user-select: none;
   z-index: 10;
 }
 
@@ -165,6 +166,12 @@ html, body {
 
 .menu > ul > li > i {
   padding-right: 0.5em;
+}
+
+.menu > ul > li.meta {
+  opacity: 0.75;
+  font-weight: bold;
+  justify-content: center;
 }
 
 /* TOAST STYLE */
