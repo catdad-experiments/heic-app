@@ -178,6 +178,8 @@ html, body {
 /* INTRO */
 
 .intro {
+  padding: 40px;
+  width: 100%;
   text-align: center;
   user-select: none;
 }
