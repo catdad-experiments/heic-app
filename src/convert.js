@@ -97,6 +97,7 @@ export default ({ events }) => {
 
   const onConvert = ({ files, quality, result }) => {
     const extension = EXTENSIONS[quality.mime];
+    const action = result.value;
 
     while (container.firstChild) {
       container.removeChild(container.firstChild);
@@ -117,7 +118,7 @@ export default ({ events }) => {
       console.log(`converting ${file.name} to ${output}`);
       const canvas = await render(arrayBuffer);
 
-      if (result === 'display') {
+      if (action === 'display') {
         console.log(`displaying ${file.name} to ${output}`);
         const img = document.createElement('img');
         await loadUrl(img, canvas.toDataURL(quality.mime, quality.quality));
@@ -136,7 +137,7 @@ export default ({ events }) => {
         events.emit('download', { blob, filename: output });
       }
     }).then(() => {
-      if (result === 'display') {
+      if (action === 'display') {
         events.emit('info', `Right-click or long press to save ${files.length > 1 ? 'images' : 'image'}`);
       }
     }).catch(err => {

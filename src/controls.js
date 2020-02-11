@@ -2,7 +2,7 @@ const find = selector => document.querySelector(selector);
 
 export default ({ events, menu, storage }) => {
   let DEFAULT_EXPORT_QUALITY = storage.get('export-quality') || { mime: 'image/png', quality: 1 };
-  let DEFAULT_RESULT = storage.get('result-action') || 'display';
+  let DEFAULT_RESULT = storage.get('result-action') || { value: 'display', text: 'display images' };
   let deferredPrompt;
 
   const controls = find('.controls');
@@ -12,6 +12,11 @@ export default ({ events, menu, storage }) => {
   const intro = find('#intro');
   const quality = find('#quality');
   const results = find('#results');
+  const qualityValue = find('[data-for=quality]');
+  const resultsValue = find('[data-for=results]');
+
+  qualityValue.innerHTML = DEFAULT_EXPORT_QUALITY.text;
+  resultsValue.innerHTML = DEFAULT_RESULT.text;
 
   const help = find('#help');
 
@@ -47,10 +52,11 @@ export default ({ events, menu, storage }) => {
       return choice;
     });
 
-    menu(...choices).then(({ mime, quality }) => {
-      DEFAULT_EXPORT_QUALITY = { mime, quality };
+    menu(...choices).then(({ mime, quality, text }) => {
+      DEFAULT_EXPORT_QUALITY = { mime, quality, text };
       storage.set('export-quality', DEFAULT_EXPORT_QUALITY);
       events.emit('controls-quality', DEFAULT_EXPORT_QUALITY);
+      qualityValue.innerHTML = DEFAULT_EXPORT_QUALITY.text;
     }).catch(err => {
       events.emit('warn', err);
     });
@@ -61,17 +67,18 @@ export default ({ events, menu, storage }) => {
       { text: 'display images', value: 'display' },
       { text: 'download images', value: 'download' },
     ].map(choice => {
-      if (choice.value === DEFAULT_RESULT) {
+      if (choice.value === DEFAULT_RESULT.value) {
         return Object.assign({ icon: 'check' }, choice);
       }
 
       return choice;
     });
 
-    menu(...choices).then(({ value }) => {
-      DEFAULT_RESULT = value;
+    menu(...choices).then(({ value, text }) => {
+      DEFAULT_RESULT = { text, value };
       storage.set('result-action', DEFAULT_RESULT);
       events.emit('controls-result', DEFAULT_RESULT);
+      resultsValue.innerHTML = DEFAULT_RESULT.text;
     }).catch(err => {
       events.emit('warn', err);
     });
@@ -100,6 +107,18 @@ export default ({ events, menu, storage }) => {
     });
   };
 
+  const onValuePicker = ({ target }) => {
+    const control = target.getAttribute('data-for');
+
+    if (control === 'quality') {
+      onQuality();
+    }
+
+    if (control === 'results') {
+      onResults();
+    }
+  };
+
   const onFileShare = ({ file }) => void events.emit('open', { files: [file] });
   const onOpen = ({ files }) => void events.emit('convert', {
     files,
@@ -115,6 +134,9 @@ export default ({ events, menu, storage }) => {
   quality.addEventListener('click', onQuality);
   results.addEventListener('click', onResults);
 
+  qualityValue.addEventListener('click', onValuePicker);
+  resultsValue.addEventListener('click', onValuePicker);
+
   events.on('can-install', onCanInstall);
   events.on('file-share', onFileShare);
   events.on('open', onOpen);
@@ -127,6 +149,9 @@ export default ({ events, menu, storage }) => {
     openInput.removeEventListener('change', onOpenInput);
     quality.removeEventListener('click', onQuality);
     results.removeEventListener('click', onResults);
+
+    qualityValue.addEventListener('click', onValuePicker);
+    resultsValue.addEventListener('click', onValuePicker);
 
     events.off('can-install', onCanInstall);
     events.off('file-share', onFileShare);

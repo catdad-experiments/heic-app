@@ -195,6 +195,28 @@ html, body {
   font-size: 6rem;
 }
 
+.settings {
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.settings .label {
+  width: 100%;
+  text-align: center;
+  opacity: 0.75;
+  font-weight: bold;
+  margin-top: 26px;
+}
+
+.settings .value {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid var(--middleground);
+  border-radius: 2rem;
+  margin-top: 10px;
+}
+
 /* MISC */
 
 .main img {
