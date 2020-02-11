@@ -92,10 +92,12 @@ const isHeic = (buffer) => {
   return brands[brandMajor] || false;
 };
 
-export default ({ events }) => {
+export default ({ events, progress }) => {
   const container = document.querySelector('#main');
 
   const onConvert = ({ files, quality, result }) => {
+    progress.show();
+
     const extension = EXTENSIONS[quality.mime];
     const action = result.value;
 
@@ -139,6 +141,8 @@ export default ({ events }) => {
         events.emit('download', { blob, filename: output });
       }
     }).then(() => {
+      progress.hide();
+
       if (action === 'display') {
         events.emit('info', `Right-click or long press to save ${files.length > 1 ? 'images' : 'image'}`);
       }
