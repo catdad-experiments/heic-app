@@ -33,16 +33,20 @@ export default (...items) => {
     items.forEach(item => {
       const el = elem('li');
 
-      if (hasIcons) {
+      if (item.meta === true) {
+        el.classList.add('meta');
+      } else if (hasIcons) {
         el.appendChild(icon(item.icon));
       }
 
       el.appendChild(document.createTextNode(item.text));
 
-      el.onclick = () => {
-        resolve(item);
-        container.remove();
-      };
+      if (item.meta !== true) {
+        el.onclick = () => {
+          resolve(item);
+          container.remove();
+        };
+      }
 
       menu.appendChild(el);
     });
