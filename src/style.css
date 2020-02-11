@@ -128,7 +128,7 @@ html, body {
   max-width: var(--limit);
   margin: auto;
   border-radius: 16px 16px 0 0;
-  background: linear-gradient(var(--lvl2), var(--background), var(--background));
+  background: linear-gradient(var(--lvl2), var(--background) 60%);
   box-shadow: 0 -12px 8px -10px var(--lvl2);
 }
 
