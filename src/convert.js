@@ -99,8 +99,10 @@ export default ({ events }) => {
     const extension = EXTENSIONS[quality.mime];
     const action = result.value;
 
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
+    if (action === 'display') {
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
     }
 
     series(files, async file => {
