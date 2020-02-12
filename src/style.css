@@ -219,6 +219,45 @@ html, body {
 
 /* MISC */
 
+.progress {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.9);
+}
+
+.progress .ring {
+  --size: 100px;
+  --thick: 6px;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+}
+.progress .ring:after {
+  content: " ";
+  display: block;
+  width: calc(var(--size) - var(--thick) - var(--thick));
+  height: calc(var(--size) - var(--thick) - var(--thick));
+  border-radius: 50%;
+  border: var(--thick) solid var(--foreground);
+  border-color: var(--foreground) transparent var(--foreground) transparent;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .main img {
   max-height: 600px;
   max-width: 600px;

@@ -131,6 +131,7 @@ export default () => {
     load('./event-emitter.js'),
     load('./storage.js'),
     load('./menu.js'),
+    load('./progress.js'),
     load('./controls.js'),
     load('./open.js'),
     load('./convert.js'),
@@ -139,10 +140,11 @@ export default () => {
     eventEmitter,
     storage,
     menu,
+    progress,
     ...modules
   ]) => {
     // set up a global event emitter
-    const context = { events: eventEmitter(), storage, menu, load };
+    const context = { events: eventEmitter(), storage, menu, progress, load };
     const destroys = await map(modules, mod => mod(context));
 
     context.events.on('error', function (err) {
