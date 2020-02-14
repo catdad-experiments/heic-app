@@ -1,4 +1,8 @@
-# heic-app
+<p align="center">
+  <img src="https://catdad-experiments.github.io/heic-app/assets/icon.svg" width="200px" alt="logo" />
+</p>
+
+# heic app
 
 ⚒👷‍♂️👷‍♀️🛠
 
