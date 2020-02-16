@@ -15,6 +15,7 @@ const RESULTS_OPTIONS = [
 export default ({ events, menu, storage }) => {
   let DEFAULT_EXPORT_QUALITY = storage.get('export-quality') || QUALITY_OPTIONS[2];
   let DEFAULT_RESULT = storage.get('result-action') || RESULTS_OPTIONS[0];
+  let DEFAULT_THEME = storage.get('theme') || 'auto';
   let deferredPrompt;
 
   const controls = find('.controls');
@@ -130,17 +131,18 @@ export default ({ events, menu, storage }) => {
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
     theme.setAttribute('data-theme', name);
+    storage.set('theme', name);
 
     switch (name) {
       case 'auto':
         theme.innerHTML = 'brightness_auto';
         break;
       case 'light':
-        theme.innerHTML = 'brightness_high';
+        theme.innerHTML = 'brightness_5';
         document.body.classList.add('light');
         break;
       case 'dark':
-        theme.innerHTML = 'brightness_low';
+        theme.innerHTML = 'brightness_4';
         document.body.classList.add('dark');
         break;
     }
@@ -160,6 +162,8 @@ export default ({ events, menu, storage }) => {
     quality: DEFAULT_EXPORT_QUALITY,
     result: DEFAULT_RESULT
   });
+
+  applyTheme(DEFAULT_THEME);
 
   help.addEventListener('click', onHelp);
   install.addEventListener('click', onInstall);
