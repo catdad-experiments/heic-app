@@ -240,11 +240,12 @@ html, body {
 
 .settings .value {
   width: 100%;
+  max-width: 360px;
   text-align: center;
   padding: 10px;
-  border: 1px solid var(--middleground);
+  border: 1px solid var(--middle);
   border-radius: 2rem;
-  margin-top: 10px;
+  margin: 10px auto 0;
 }
 
 /* MISC */
