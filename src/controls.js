@@ -24,6 +24,7 @@ export default ({ events, menu, storage }) => {
   const intro = find('#intro');
   const quality = find('#quality');
   const results = find('#results');
+  const theme = find('#theme');
   const qualityValue = find('[data-for=quality]');
   const resultsValue = find('[data-for=results]');
 
@@ -125,6 +126,33 @@ export default ({ events, menu, storage }) => {
     }
   };
 
+  const onTheme = ({ target }) => {
+    const themes = ['auto', 'light', 'dark'];
+    const current = target.getAttribute('data-theme');
+    const nextTheme = themes[(themes.indexOf(current) + 1) % themes.length];
+
+    switch (nextTheme) {
+      case 'auto':
+        theme.innerHTML = 'brightness_auto';
+        theme.setAttribute('data-theme', 'auto');
+        document.body.classList.remove('light');
+        document.body.classList.remove('dark');
+        break;
+      case 'light':
+        theme.innerHTML = 'brightness_low';
+        theme.setAttribute('data-theme', 'light');
+        document.body.classList.remove('dark');
+        document.body.classList.add('light');
+        break;
+      case 'dark':
+        theme.innerHTML = 'brightness_high';
+        theme.setAttribute('data-theme', 'dark');
+        document.body.classList.remove('light');
+        document.body.classList.add('dark');
+        break;
+    }
+  };
+
   const onFileShare = ({ file }) => void events.emit('open', { files: [file] });
   const onOpen = ({ files }) => void events.emit('convert', {
     files,
@@ -139,6 +167,7 @@ export default ({ events, menu, storage }) => {
   openInput.addEventListener('change', onOpenInput);
   quality.addEventListener('click', onQuality);
   results.addEventListener('click', onResults);
+  theme.addEventListener('click', onTheme);
 
   qualityValue.addEventListener('click', onValuePicker);
   resultsValue.addEventListener('click', onValuePicker);
@@ -155,6 +184,7 @@ export default ({ events, menu, storage }) => {
     openInput.removeEventListener('change', onOpenInput);
     quality.removeEventListener('click', onQuality);
     results.removeEventListener('click', onResults);
+    theme.removeEventListener('click', onTheme);
 
     qualityValue.addEventListener('click', onValuePicker);
     resultsValue.addEventListener('click', onValuePicker);

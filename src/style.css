@@ -21,11 +21,17 @@ body {
 }
 
 @media (prefers-color-scheme: light) {
-  body {
+  body:not(.dark) {
     --lvl2: var(--LIGHT-lvl2);
     --foreground: var(--LIGHT-foreground);
     --background: var(--LIGHT-background);
   }
+}
+
+body.light {
+  --lvl2: var(--LIGHT-lvl2);
+  --foreground: var(--LIGHT-foreground);
+  --background: var(--LIGHT-background);
 }
 
 html, body {
