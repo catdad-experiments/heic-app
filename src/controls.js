@@ -128,6 +128,7 @@ export default ({ events, menu, storage }) => {
   };
 
   const applyTheme = name => {
+    document.body.classList.add('themed');
     document.body.classList.remove('light');
     document.body.classList.remove('dark');
     theme.setAttribute('data-theme', name);
