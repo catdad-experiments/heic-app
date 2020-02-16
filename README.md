@@ -9,3 +9,12 @@
 Well, that is no more. Using the [HEIC Converter](https://catdad-experiments.github.io/heic-app/), you can now convert your images anywhere you use the browser -- works across any phone, laptop, or desktop, across Windows, Linux, and MacOS. And best of all, you don't need to install anything. It just works directly in your browser.
 
 If you do wish to install it, just follow the prompt to install the app, or create a shortcut through your browser's menu.
+
+## Related
+
+Want to convert HEIC images from your Node.JS application? See the following:
+
+* [heic-cli](https://github.com/catdad-experiments/heic-cli) - convert heic/heif images to jpeg or png from the command line
+* [heic-convert](https://github.com/catdad-experiments/heic-convert) - convert heic/heif images to jpeg and png
+* [heic-decode](https://github.com/catdad-experiments/heic-decode) - decode heic images to raw image data
+* [libheif-js](https://github.com/catdad-experiments/libheif-js) - libheif as a pure-javascript npm module
