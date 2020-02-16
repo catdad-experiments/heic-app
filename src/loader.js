@@ -17,38 +17,36 @@ let events = (function () {
   };
 }());
 
-//window.addEventListener('beforeinstallprompt', (ev) => {
-//  console.log('👀 we can install the app now');
-//  events.emit('can-install', { prompt: ev });
-//});
-//
-//window.addEventListener('appinstalled', () => {
-//  events.emit('info', '🎊 installed 🎊');
-//});
-//
-//if ('serviceWorker' in navigator) {
-//  console.log('👍', 'navigator.serviceWorker is supported');
-//
-//  navigator.serviceWorker.register('./service-worker.js', { scope: './' }).then(() => {
-//    console.log('👍', 'worker registered');
-//  }).catch(err => {
-//    console.warn('👎', 'worker errored', err);
-//  });
-//
-//  navigator.serviceWorker.addEventListener('message', (ev) => {
-//    const data = ev.data;
-//
-//    if (data.action === 'log') {
-//      return void console.log('worker:', ...data.args);
-//    }
-//
-//    if (data.action === 'load-image') {
-//      events.emit('file-share', { file: data.file });
-//    }
-//
-//    console.log('worker message', ev.data);
-//  });
-//}
+window.addEventListener('beforeinstallprompt', (ev) => {
+  console.log('👀 we can install the app now');
+  events.emit('can-install', { prompt: ev });
+});
+
+window.addEventListener('appinstalled', () => {
+  events.emit('info', '🎊 installed 🎊');
+});
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js', { scope: './' }).then(() => {
+    console.log('👍', 'worker registered');
+  }).catch(err => {
+    console.warn('👎', 'worker errored', err);
+  });
+
+  navigator.serviceWorker.addEventListener('message', (ev) => {
+    const data = ev.data;
+
+    if (data.action === 'log') {
+      return void console.log('worker:', ...data.args);
+    }
+
+    //if (data.action === 'load-image') {
+    //  events.emit('file-share', { file: data.file });
+    //}
+
+    console.log('worker message', ev.data);
+  });
+}
 
 export default () => {
   function onMissingFeatures(missing) {
