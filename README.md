@@ -2,7 +2,7 @@
   <img src="https://catdad-experiments.github.io/heic-app/assets/icon.svg" width="200px" alt="logo" />
 </p>
 
-# heic app
+# HEIC Converter App
 
 [HEIC](http://www.macworld.co.uk/feature/iphone/what-is-heic-3660408/) is a growing image format that is quickly gaining popularity. It is the primary for new iPhones and iPads, and is being introduced in new [DLSR cameras](https://www.usa.canon.com/internet/portal/us/home/explore/product-showcases/cameras-and-lenses/1dx-mark-iii) as well. Having been an Apple exclusive for a few years, tooling around using and converting the format has been limited to just Apple devices.
 
