@@ -126,31 +126,32 @@ export default ({ events, menu, storage }) => {
     }
   };
 
+  const applyTheme = name => {
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    theme.setAttribute('data-theme', name);
+
+    switch (name) {
+      case 'auto':
+        theme.innerHTML = 'brightness_auto';
+        break;
+      case 'light':
+        theme.innerHTML = 'brightness_high';
+        document.body.classList.add('light');
+        break;
+      case 'dark':
+        theme.innerHTML = 'brightness_low';
+        document.body.classList.add('dark');
+        break;
+    }
+  };
+
   const onTheme = ({ target }) => {
     const themes = ['auto', 'light', 'dark'];
     const current = target.getAttribute('data-theme');
     const nextTheme = themes[(themes.indexOf(current) + 1) % themes.length];
 
-    switch (nextTheme) {
-      case 'auto':
-        theme.innerHTML = 'brightness_auto';
-        theme.setAttribute('data-theme', 'auto');
-        document.body.classList.remove('light');
-        document.body.classList.remove('dark');
-        break;
-      case 'light':
-        theme.innerHTML = 'brightness_low';
-        theme.setAttribute('data-theme', 'light');
-        document.body.classList.remove('dark');
-        document.body.classList.add('light');
-        break;
-      case 'dark':
-        theme.innerHTML = 'brightness_high';
-        theme.setAttribute('data-theme', 'dark');
-        document.body.classList.remove('light');
-        document.body.classList.add('dark');
-        break;
-    }
+    applyTheme(nextTheme);
   };
 
   const onFileShare = ({ file }) => void events.emit('open', { files: [file] });
