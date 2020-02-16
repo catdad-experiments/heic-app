@@ -1,11 +1,31 @@
 :root {
   --controls-height: 3em;
-  --lvl2: #27292b;
-  --background: #202124;
-  --middleground: #777777;
-  --foreground: #e5e5e5;
   --full: calc(var(--vh, 1vh) * 100);
   --limit: 600px;
+
+  --middleground: #777777;
+
+  --DARK-lvl2: #27292b;
+  --DARK-background: #202124;
+  --DARK-foreground: #e5e5e5;
+
+  --LIGHT-lvl2: #f0f0f0;
+  --LIGHT-foreground: #202124;
+  --LIGHT-background: #e5e5e5;
+}
+
+body {
+  --lvl2: var(--DARK-lvl2);
+  --background: var(--DARK-background);
+  --foreground: var(--DARK-foreground);
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    --lvl2: var(--LIGHT-lvl2);
+    --foreground: var(--LIGHT-foreground);
+    --background: var(--LIGHT-background);
+  }
 }
 
 html, body {
