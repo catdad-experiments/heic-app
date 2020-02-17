@@ -13,7 +13,7 @@
   --DARK-background: var(--darkest);
   --DARK-foreground: var(--light);
 
-  --LIGHT-lvl2: var(--lightest)
+  --LIGHT-lvl2: var(--lightest);
   --LIGHT-foreground: var(--darkest);
   --LIGHT-background: var(--light);
 }
