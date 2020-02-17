@@ -1,11 +1,41 @@
 :root {
   --controls-height: 3em;
-  --lvl2: #27292b;
-  --background: #202124;
-  --middleground: #777777;
-  --foreground: #e5e5e5;
   --full: calc(var(--vh, 1vh) * 100);
   --limit: 600px;
+
+  --darkest: #202124;
+  --dark: #27292b;
+  --middle: #777777;
+  --light: #e5e5e5;
+  --lightest: #f0f0f0;
+
+  --DARK-lvl2: var(--dark);
+  --DARK-background: var(--darkest);
+  --DARK-foreground: var(--light);
+
+  --LIGHT-lvl2: var(--lightest);
+  --LIGHT-foreground: var(--darkest);
+  --LIGHT-background: var(--light);
+}
+
+body {
+  --lvl2: var(--DARK-lvl2);
+  --background: var(--DARK-background);
+  --foreground: var(--DARK-foreground);
+}
+
+@media (prefers-color-scheme: light) {
+  body.themed:not(.dark) {
+    --lvl2: var(--LIGHT-lvl2);
+    --foreground: var(--LIGHT-foreground);
+    --background: var(--LIGHT-background);
+  }
+}
+
+body.themed.light {
+  --lvl2: var(--LIGHT-lvl2);
+  --foreground: var(--LIGHT-foreground);
+  --background: var(--LIGHT-background);
 }
 
 html, body {
@@ -210,16 +240,22 @@ html, body {
 
 .settings .value {
   width: 100%;
+  max-width: 360px;
   text-align: center;
   padding: 10px;
-  border: 1px solid var(--middleground);
+  border: 1px solid var(--middle);
   border-radius: 2rem;
-  margin-top: 10px;
+  margin: 10px auto 0;
 }
 
 /* MISC */
 
 .progress {
+  --fill: var(--darkest);
+  --color: var(--light);
+  --size: 100px;
+  --thick: 6px;
+
   position: fixed;
   top: 0;
   bottom: 0;
@@ -228,24 +264,37 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.9);
+  background: var(--fill);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.5s ease;
+}
+
+.progress.init {
+  pointer-events: all;
+  opacity: 1;
+}
+
+.progress.in-progress {
+  pointer-events: all;
+  opacity: 0.9;
 }
 
 .progress .ring {
-  --size: 100px;
-  --thick: 6px;
   display: inline-block;
   width: var(--size);
   height: var(--size);
 }
-.progress .ring:after {
+.progress.init .ring:after,
+.progress.in-progress .ring:after {
   content: " ";
   display: block;
   width: calc(var(--size) - var(--thick) - var(--thick));
   height: calc(var(--size) - var(--thick) - var(--thick));
   border-radius: 50%;
-  border: var(--thick) solid var(--foreground);
-  border-color: var(--foreground) transparent var(--foreground) transparent;
+  border: var(--thick) solid var(--color);
+  border-color: var(--color) transparent var(--color) transparent;
   animation: spin 1.2s linear infinite;
 }
 
