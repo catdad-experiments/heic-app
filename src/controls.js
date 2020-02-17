@@ -15,6 +15,7 @@ const RESULTS_OPTIONS = [
 export default ({ events, menu, storage }) => {
   let DEFAULT_EXPORT_QUALITY = storage.get('export-quality') || QUALITY_OPTIONS[2];
   let DEFAULT_RESULT = storage.get('result-action') || RESULTS_OPTIONS[0];
+  let DEFAULT_THEME = storage.get('theme') || 'auto';
   let deferredPrompt;
 
   const controls = find('.controls');
@@ -24,6 +25,7 @@ export default ({ events, menu, storage }) => {
   const intro = find('#intro');
   const quality = find('#quality');
   const results = find('#results');
+  const theme = find('#theme');
   const qualityValue = find('[data-for=quality]');
   const resultsValue = find('[data-for=results]');
 
@@ -125,12 +127,44 @@ export default ({ events, menu, storage }) => {
     }
   };
 
+  const applyTheme = name => {
+    document.body.classList.add('themed');
+    document.body.classList.remove('light');
+    document.body.classList.remove('dark');
+    theme.setAttribute('data-theme', name);
+    storage.set('theme', name);
+
+    switch (name) {
+      case 'auto':
+        theme.innerHTML = 'brightness_auto';
+        break;
+      case 'light':
+        theme.innerHTML = 'brightness_5';
+        document.body.classList.add('light');
+        break;
+      case 'dark':
+        theme.innerHTML = 'brightness_4';
+        document.body.classList.add('dark');
+        break;
+    }
+  };
+
+  const onTheme = ({ target }) => {
+    const themes = ['auto', 'light', 'dark'];
+    const current = target.getAttribute('data-theme');
+    const nextTheme = themes[(themes.indexOf(current) + 1) % themes.length];
+
+    applyTheme(nextTheme);
+  };
+
   const onFileShare = ({ file }) => void events.emit('open', { files: [file] });
   const onOpen = ({ files }) => void events.emit('convert', {
     files,
     quality: DEFAULT_EXPORT_QUALITY,
     result: DEFAULT_RESULT
   });
+
+  applyTheme(DEFAULT_THEME);
 
   help.addEventListener('click', onHelp);
   install.addEventListener('click', onInstall);
@@ -139,6 +173,7 @@ export default ({ events, menu, storage }) => {
   openInput.addEventListener('change', onOpenInput);
   quality.addEventListener('click', onQuality);
   results.addEventListener('click', onResults);
+  theme.addEventListener('click', onTheme);
 
   qualityValue.addEventListener('click', onValuePicker);
   resultsValue.addEventListener('click', onValuePicker);
@@ -155,6 +190,7 @@ export default ({ events, menu, storage }) => {
     openInput.removeEventListener('change', onOpenInput);
     quality.removeEventListener('click', onQuality);
     results.removeEventListener('click', onResults);
+    theme.removeEventListener('click', onTheme);
 
     qualityValue.addEventListener('click', onValuePicker);
     resultsValue.addEventListener('click', onValuePicker);

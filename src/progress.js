@@ -1,19 +1,11 @@
-const elem = document.createElement('div');
-elem.classList.add('progress');
-const spinner = document.createElement('div');
-spinner.classList.add('ring');
-
-elem.appendChild(spinner);
+const progress = document.querySelector('#progress');
 
 export default {
   show() {
-    if (!elem.parentElement) {
-      document.body.appendChild(elem);
-    }
+    progress.classList.add('in-progress');
   },
   hide() {
-    if (elem.parentElement) {
-      document.body.removeChild(elem);
-    }
+    progress.classList.remove('init');
+    progress.classList.remove('in-progress');
   }
 };

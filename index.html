@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>HEIC App</title>
+  <title>HEIC Converter</title>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,9 +43,14 @@
       <i class="material-icons material-inline" title="Open" id="open">insert_photo</i>
       <i class="material-icons material-inline" title="Quality" id="quality">equalizer</i>
       <i class="material-icons material-inline" title="Results" id="results">system_update</i>
+      <i class="material-icons material-inline" title="Theme" id="theme" data-theme="auto">brightness_auto</i>
       <i class="material-icons material-inline" title="Help" id="help">help</i>
       <input type="file" id="open-input" class="hide" multiple />
     </div>
+  </div>
+
+  <div id="progress" class="progress init">
+    <div class="ring"></div>
   </div>
 
   <script type="module">
