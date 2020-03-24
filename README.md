@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="https://catdad-experiments.github.io/heic-app/assets/icon.svg" width="200px" alt="logo" />
+  <a href="https://catdad-experiments.github.io/heic-app/">
+    <img src="https://catdad-experiments.github.io/heic-app/assets/icon.svg" width="200px" alt="logo" />
+  </a>
 </p>
 
 # HEIC Converter App
