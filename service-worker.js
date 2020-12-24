@@ -30,7 +30,7 @@ const CDN_PATHS = [
   'https://cdn.jsdelivr.net/npm/toastify-js@1.6.1/src/toastify.min.css',
   'https://cdn.jsdelivr.net/npm/toastify-js@1.6.1/src/toastify.min.js',
   'https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js',
-  'https://cdn.jsdelivr.net/npm/libheif-js@1.9.1/libheif/libheif.min.js',
+  'https://cdn.jsdelivr.net/npm/libheif-js@1.10.0/libheif/libheif.min.js',
 ];
 
 // eslint-disable-next-line no-console
