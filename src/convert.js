@@ -1,5 +1,8 @@
-/* global libheif */
 /* eslint-disable no-console */
+
+import libheif from 'https://cdn.jsdelivr.net/npm/libheif-js@1.18.2/libheif-wasm/libheif-bundle.mjs';
+
+const { HeifDecoder } = libheif();
 
 const EXTENSIONS = {
   'image/png': 'png',
@@ -30,7 +33,7 @@ const render = async (arrayBuffer) => {
   const canvas = document.createElement('canvas');
 
   const { image, width, height } = await new Promise((resolve, reject) => {
-    const decoder = new libheif.HeifDecoder();
+    const decoder = new HeifDecoder();
     const data = decoder.decode(arrayBuffer);
 
     if (!data.length) {
