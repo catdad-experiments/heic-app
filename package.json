@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "multispawn npx serve -l 8001 ! ssh -R 80:localhost:8001 ssh.localhost.run"
+    "serve": "npx serve -l 8001",
+    "expose": "ssh -R 80:localhost:8001 nokey@localhost.run",
+    "start": "multispawn npm run -S serve ! npm run -S expose"
   },
   "repository": {
     "type": "git",
