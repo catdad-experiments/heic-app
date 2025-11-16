@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/catdad-experiments/heic-app#readme",
   "devDependencies": {
-    "eslint": "^5.16.0",
+    "eslint": "^9.39.1",
     "multispawn": "^1.0.0",
     "serve": "^14.2.4"
   }
